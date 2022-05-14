@@ -1,4 +1,47 @@
+:root {
+    --screen-font-size: 5rem;
+    --button-font-size: 4rem;
+}
+
 body {
     margin: 0;
     padding: 0;
+}
+
+
+#calculator {
+    min-height: 95vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Space Mono';
+    font-size: 2rem;
+}
+
+.container {
+    width: 450px;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.screen {
+    font-size: var(--screen-font-size);
+    min-height: calc(var(--screen-font-size) * 1.5);
+    display:flex;
+    justify-content: end;
+    align-items: center;
+    border: 1px solid;
+    margin-bottom: 10px;
+    padding-right: 20px;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 5px;
+}
+
+.button-grid button {
+    height: 100px;
 }

@@ -1,3 +1,5 @@
+
+
 function add(a, b) {
     return a + b
 }
@@ -11,6 +13,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b == 0) return null
     return a / b
 }
 
@@ -25,7 +28,7 @@ function operate(operator, a, b) {
         case "/":
             return divide(a, b)
         default:
-            return "ERROR"
+            return null
     }
-}
+}   
 
