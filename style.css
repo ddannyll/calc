@@ -20,7 +20,14 @@ body {
     align-items: center;
     font-family: 'Space Mono';
     font-size: 2rem;
+    gap: 3rem;
 }
+
+.side-text {
+    text-align: center;
+    width: 200px;
+}
+
 
 .container {
     width: 450px;
@@ -71,4 +78,15 @@ body {
 
 .button-grid>:not(.operator, .operand) {
     background-color: var(--secondary-light);
+}
+
+@media only screen and (max-width: 1000px) {
+    .side-text {
+        display: none;
+    }
+}
+
+.fa-github {
+    text-align: center;
+    margin: auto;
 }
