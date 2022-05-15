@@ -201,5 +201,11 @@ buttons.forEach((button) => {
     }
 })
 
+window.addEventListener('keydown', (e) => {
+    const btn = document.querySelector(`button[data-key="${e.key}"]`)
+    if (btn === null) return
+    btn.click()
+})
+
 resetCalc()
 displayStr('0')
