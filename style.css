@@ -1,6 +1,10 @@
 :root {
     --screen-font-size: 4rem;
     --button-font-size: 4rem;
+    --primary-dark: #5F7161;
+    --secondary-dark: #6D8B74;
+    --primary-light: #EFEAD8;
+    --secondary-light: #D0C9C0;
 }
 
 body {
@@ -22,6 +26,9 @@ body {
     width: 450px;
     border: 1px solid;
     padding: 10px;
+    background-color: var(--primary-dark);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 30px 10px;
+    opacity: 0.8;
 }
 
 .screen {
@@ -33,6 +40,7 @@ body {
     border: 1px solid;
     margin-bottom: 10px;
     padding-right: 20px;
+    background-color: var(--primary-light);
 }
 
 .button-grid {
@@ -44,4 +52,15 @@ body {
 
 .button-grid button {
     height: 100px;
+    font-size: 1.5rem;
+}
+
+.operator {
+    background-color: var(--secondary-dark);
+    color: var(--primary-light);
+}
+
+
+.button-grid>:not(.operator, .operand) {
+    background-color: var(--secondary-light);
 }
