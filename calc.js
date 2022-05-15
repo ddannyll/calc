@@ -1,9 +1,13 @@
 const screen = document.querySelector('#calculator .screen')
 const MAX_DIGIT = 8
+let calc = {
+    a: "",
+    b: null,
+    operator: null,
+    end: false
+}
 
-
-let calc = {}
-
+// --- Basic Calculation Functions ---
 function add(a, b) {
     return a + b
 }
@@ -36,19 +40,50 @@ function operate(operator, a, b) {
     }
 }   
 
+
+// --- Calc Object Interaction Functions
+
 function resetCalc() {
     calc = {
         a: "",
         b: null,
-        operator: null
+        operator: null,
+        end: false
+    }
+}
+function evaluateCalc() {
+    let result = operate(calc.operator, +calc.a, +calc.b)
+    resetCalc()
+    calc.a = result
+    calc.end = true
+    displayStr(String(result))
+}
+
+function processOperand(button) {
+    function appendNum(curr, num) {
+        (curr === null) ? curr = num : curr += num
+        return curr
+    }
+
+    if (calc.operator === null) {
+        // Editing the first number (before operator)
+        if (calc.end) {
+            // If an equal sign has just been pressed before, 
+            // start a new calculation
+            calc.a = ''
+            calc.end = false
+        }
+        calc.a = appendNum(calc.a, button.value);
+        displayStr(calc.a)
+    } else {
+        // Editing the second number (after operator)
+        calc.b = appendNum(calc.b, button.value)
+        displayStr(calc.b)
     }
 }
 
-function appendNum(curr, num) {
-    (curr === null) ? curr = num : curr += num
-    return curr
-}
 
+// --- Displaying Functions to Calculator Screen ---
 function displayStr(str) {
     if (str.length > MAX_DIGIT) {
         str = truncateStr(str, MAX_DIGIT)
@@ -67,34 +102,25 @@ function truncateStr(str, maxLength) {
     return str
 }
 
-const buttons = document.querySelectorAll(".button-grid button")
 
+// --- Event Listeners --- 
+const buttons = document.querySelectorAll(".button-grid button")
 buttons.forEach((button) => {
     switch (button.className) {
         case 'operator':
             button.onclick = () => {
+                if (calc.b !== null) { 
+                    // Continuing a calculation (i.e. 5 + 6 + ...)
+                    evaluateCalc()
+                }
                 calc.operator = button.value
-                calc.b = null
             }
             break
         case 'operand':
-            button.onclick = () => {
-                if (calc.operator === null) {
-                    calc.a = appendNum(calc.a, button.value);
-                    displayStr(calc.a)
-                } else {
-                    calc.b = appendNum(calc.b, button.value)
-                    displayStr(calc.b)
-                }
-            }
+            button.onclick = processOperand
             break
         case 'equals':
-            button.onclick = () => {
-                result = operate(calc.operator, +calc.a, +calc.b)
-                resetCalc()
-                calc.a = result
-                displayStr(result)
-            }
+            button.onclick = evaluateCalc()
             break
         case 'clear':
             button.onclick = () => {
