@@ -73,13 +73,22 @@ function processOperand(button) {
             calc.a = ''
             calc.end = false
         }
-        calc.a = appendNum(calc.a, button.value);
+        calc.a = appendNum(calc.a, button.target.value);
         displayStr(calc.a)
     } else {
         // Editing the second number (after operator)
-        calc.b = appendNum(calc.b, button.value)
+        calc.b = appendNum(calc.b, button.target.value)
         displayStr(calc.b)
     }
+}
+
+function processOperator(button) {
+    console.log(calc)
+    if (calc.b !== null) { 
+        // Continuing a calculation (i.e. 5 + 6 + ...)
+        evaluateCalc()
+    }
+    calc.operator = button.target.value
 }
 
 
@@ -108,19 +117,13 @@ const buttons = document.querySelectorAll(".button-grid button")
 buttons.forEach((button) => {
     switch (button.className) {
         case 'operator':
-            button.onclick = () => {
-                if (calc.b !== null) { 
-                    // Continuing a calculation (i.e. 5 + 6 + ...)
-                    evaluateCalc()
-                }
-                calc.operator = button.value
-            }
+            button.onclick = processOperator
             break
         case 'operand':
             button.onclick = processOperand
             break
         case 'equals':
-            button.onclick = evaluateCalc()
+            button.onclick = evaluateCalc
             break
         case 'clear':
             button.onclick = () => {
