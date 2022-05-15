@@ -63,11 +63,11 @@ body {
 }
 
 .button-grid button:hover {
-    box-shadow: var(--secondary-light) 0px 0px 10px 5px;
+    filter: brightness(95%);
 }
 
 .button-grid button:active {
-    opacity: 0.9;
+    filter: brightness(90%);
 }
 
 .button-grid button:focus {
