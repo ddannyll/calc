@@ -56,7 +56,7 @@ body {
 }
 
 .button-grid button:hover {
-    transform: scale(1.03);
+    box-shadow: var(--secondary-light) 0px 0px 10px 5px;
 }
 
 .button-grid button:active {
