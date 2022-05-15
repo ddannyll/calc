@@ -1,5 +1,7 @@
 const screen = document.querySelector('#calculator .screen')
 const MAX_DIGIT = 8
+const SCIENTIFIC_DP = 2
+
 let calc = {
     a: "",
     b: null,
@@ -97,6 +99,37 @@ function deleteCalc() {
     displayCalc()
 }
 
+function applyPercentage() {
+    (calc.b === null) ?
+        calc.a = String(calc.a / 100) :
+        calc.b = String(calc.b / 100)
+    displayCalc()
+}
+
+function toggleSign() {
+    function getOppositeSignString(str) {
+        (str[0] === '-') ?
+            str = str.slice(1) :
+            str =  '-' + str
+        return str
+    }
+    (calc.b === null) ?
+        calc.a = getOppositeSignString(calc.a) :
+        calc.b = getOppositeSignString(calc.b)
+    displayCalc()
+}
+
+function insertDecimal() {
+    function getInsertedDecimalStr(str) {
+        if (str.indexOf('.') !== -1) return str
+        return str += '.'
+    }
+
+    (calc.b === null) ?
+        calc.a = getInsertedDecimalStr(calc.a) :
+        calc.b = getInsertedDecimalStr(calc.b)
+    displayCalc()
+}
 
 // --- Displaying Functions to Calculator Screen ---
 function displayCalc() {
@@ -109,8 +142,13 @@ function displayCalc() {
 }
 
 function displayStr(str) {
-    if (str.length > MAX_DIGIT) {
+    if (str.length > MAX_DIGIT && str.indexOf('e') === -1) {
         str = truncateStr(str, MAX_DIGIT)
+    }
+    if (str.length > MAX_DIGIT) {
+        // Convert to scientific notation
+        let number = Number(str)
+        str = number.toExponential(SCIENTIFIC_DP)
     }
     screen.innerText = str
 }
@@ -162,40 +200,6 @@ buttons.forEach((button) => {
             return null
     }
 })
-
-function applyPercentage() {
-    (calc.b === null) ?
-        calc.a = String(calc.a / 100) :
-        calc.b = String(calc.b / 100)
-    displayCalc()
-}
-
-function toggleSign() {
-    function getOppositeSignString(str) {
-        (str[0] === '-') ?
-            str = str.slice(1) :
-            str =  '-' + str
-        return str
-    }
-    (calc.b === null) ?
-        calc.a = getOppositeSignString(calc.a) :
-        calc.b = getOppositeSignString(calc.b)
-    displayCalc()
-}
-
-function insertDecimal() {
-    function getInsertedDecimalStr(str) {
-        if (str.indexOf('.') !== -1) return str
-        return str += '.'
-    }
-
-    (calc.b === null) ?
-        calc.a = getInsertedDecimalStr(calc.a) :
-        calc.b = getInsertedDecimalStr(calc.b)
-    displayCalc()
-}
-
-
 
 resetCalc()
 displayStr('0')
