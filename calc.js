@@ -155,10 +155,20 @@ buttons.forEach((button) => {
         case 'sign':
             button.onclick = toggleSign
             break
+        case 'percent':
+            button.onclick = applyPercentage
+            break
         default:
             return null
     }
 })
+
+function applyPercentage() {
+    (calc.b === null) ?
+        calc.a = String(calc.a / 100) :
+        calc.b = String(calc.b / 100)
+    displayCalc()
+}
 
 function toggleSign() {
     function getOppositeSignString(str) {
