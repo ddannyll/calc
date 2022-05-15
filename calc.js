@@ -1,10 +1,8 @@
 const screen = document.querySelector('#calculator .screen')
+const MAX_DIGIT = 8
 
-let calc = {
-    a: "",
-    b: null,
-    operator: null
-}
+
+let calc = {}
 
 function add(a, b) {
     return a + b
@@ -34,7 +32,7 @@ function operate(operator, a, b) {
         case "/":
             return divide(a, b)
         default:
-            return null
+            return a
     }
 }   
 
@@ -52,10 +50,25 @@ function appendNum(curr, num) {
 }
 
 function displayStr(str) {
+    if (str.length > MAX_DIGIT) {
+        str = truncateStr(str, MAX_DIGIT)
+    }
     screen.innerText = str
 }
 
+function truncateStr(str, maxLength) {
+    function hasDot(str) { return (str.indexOf('.') !== -1) }
+    function tooLong(str, maxLength) { return str.length > maxLength }
+
+    // attempt to truncate by removing characters past decimal
+    while ((hasDot(str) && tooLong(str, maxLength)) || str.endsWith('.')) {
+        str = str.slice(0, -1)
+    }
+    return str
+}
+
 const buttons = document.querySelectorAll(".button-grid button")
+
 buttons.forEach((button) => {
     switch (button.className) {
         case 'operator':
@@ -78,8 +91,9 @@ buttons.forEach((button) => {
         case 'equals':
             button.onclick = () => {
                 result = operate(calc.operator, +calc.a, +calc.b)
+                resetCalc()
                 calc.a = result
-                displayStr(calc.a)
+                displayStr(result)
             }
             break
         case 'clear':
@@ -93,4 +107,5 @@ buttons.forEach((button) => {
     }
 })
 
+resetCalc()
 displayStr('0')
