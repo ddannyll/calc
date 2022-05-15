@@ -54,7 +54,7 @@ function resetCalc() {
 function evaluateCalc() {
     let result = operate(calc.operator, +calc.a, +calc.b)
     resetCalc()
-    calc.a = result
+    calc.a = String(result)
     calc.end = true
     displayCalc()
 }
@@ -139,10 +139,19 @@ buttons.forEach((button) => {
                 displayStr('0')
             }
             break
+        case 'delete':
+            button.onclick = deleteCalc
         default:
             return null
     }
 })
+
+function deleteCalc() {
+    (calc.b === null) ? 
+        calc.a = calc.a.slice(0, -1) : 
+        calc.b = calc.b.slice(0, -1)
+    displayCalc()
+}
 
 resetCalc()
 displayStr('0')
