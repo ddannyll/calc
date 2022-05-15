@@ -152,10 +152,26 @@ buttons.forEach((button) => {
         case 'decimal':
             button.onclick = insertDecimal
             break
+        case 'sign':
+            button.onclick = toggleSign
+            break
         default:
             return null
     }
 })
+
+function toggleSign() {
+    function getOppositeSignString(str) {
+        (str[0] === '-') ?
+            str = str.slice(1) :
+            str =  '-' + str
+        return str
+    }
+    (calc.b === null) ?
+        calc.a = getOppositeSignString(calc.a) :
+        calc.b = getOppositeSignString(calc.b)
+    displayCalc()
+}
 
 function insertDecimal() {
     function getInsertedDecimalStr(str) {
