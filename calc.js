@@ -56,7 +56,7 @@ function evaluateCalc() {
     resetCalc()
     calc.a = result
     calc.end = true
-    displayStr(String(result))
+    displayCalc()
 }
 
 function processOperand(button) {
@@ -74,12 +74,11 @@ function processOperand(button) {
             calc.end = false
         }
         calc.a = appendNum(calc.a, button.target.value);
-        displayStr(calc.a)
     } else {
         // Editing the second number (after operator)
         calc.b = appendNum(calc.b, button.target.value)
-        displayStr(calc.b)
     }
+    displayCalc()
 }
 
 function processOperator(button) {
@@ -93,6 +92,15 @@ function processOperator(button) {
 
 
 // --- Displaying Functions to Calculator Screen ---
+function displayCalc() {
+    if (calc.b === null) {
+        // We are editing the first operand, dislay it
+        displayStr(calc.a)
+    } else {
+        displayStr(calc.b)
+    }
+}
+
 function displayStr(str) {
     if (str.length > MAX_DIGIT) {
         str = truncateStr(str, MAX_DIGIT)
