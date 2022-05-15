@@ -203,6 +203,7 @@ buttons.forEach((button) => {
 
 window.addEventListener('keydown', (e) => {
     const btn = document.querySelector(`button[data-key="${e.key}"]`)
+    if (e.key = 'Enter') e.preventDefault()
     if (btn === null) return
     btn.click()
 })
