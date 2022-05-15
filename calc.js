@@ -90,6 +90,13 @@ function processOperator(button) {
     calc.operator = button.target.value
 }
 
+function deleteCalc() {
+    (calc.b === null) ? 
+        calc.a = calc.a.slice(0, -1) : 
+        calc.b = calc.b.slice(0, -1)
+    displayCalc()
+}
+
 
 // --- Displaying Functions to Calculator Screen ---
 function displayCalc() {
@@ -141,17 +148,28 @@ buttons.forEach((button) => {
             break
         case 'delete':
             button.onclick = deleteCalc
+            break
+        case 'decimal':
+            button.onclick = insertDecimal
+            break
         default:
             return null
     }
 })
 
-function deleteCalc() {
-    (calc.b === null) ? 
-        calc.a = calc.a.slice(0, -1) : 
-        calc.b = calc.b.slice(0, -1)
+function insertDecimal() {
+    function getInsertedDecimalStr(str) {
+        if (str.indexOf('.') !== -1) return str
+        return str += '.'
+    }
+
+    (calc.b === null) ?
+        calc.a = getInsertedDecimalStr(calc.a) :
+        calc.b = getInsertedDecimalStr(calc.b)
     displayCalc()
 }
+
+
 
 resetCalc()
 displayStr('0')
